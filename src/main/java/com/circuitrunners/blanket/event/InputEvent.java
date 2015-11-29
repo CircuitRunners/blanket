@@ -19,17 +19,21 @@
 
 package com.circuitrunners.blanket.event;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SensorBase;
 
-public class HumanNumberInputEvent extends HumanInputEvent {
-    protected double number;
+public class InputEvent {
+    protected SensorBase source;
 
-    public HumanNumberInputEvent(GenericHID source, double number) {
-        super(source);
-        this.number = number;
+    public InputEvent(final SensorBase source) {
+        this.source = source;
     }
 
-    public final double getNumber() {
-        return number;
+    /**
+     * Returns the sensor giving an input in this event.
+     *
+     * @return The sensor giving an input in this event.
+     */
+    public final SensorBase getSource() {
+        return source;
     }
 }

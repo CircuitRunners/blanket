@@ -19,6 +19,17 @@
 
 package com.circuitrunners.blanket.event;
 
-public class HumanToggleInputEvent {
-    // TODO
+import edu.wpi.first.wpilibj.GenericHID;
+
+public class HumanToggleInputEvent extends HumanInputEvent {
+    protected boolean toggle;
+
+    public HumanToggleInputEvent(GenericHID source, boolean toggle) {
+        super(source);
+        this.toggle = toggle;
+    }
+
+    public final boolean getToggle() {
+        return toggle;
+    }
 }

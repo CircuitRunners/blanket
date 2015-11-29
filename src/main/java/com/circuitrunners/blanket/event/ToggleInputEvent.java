@@ -19,6 +19,17 @@
 
 package com.circuitrunners.blanket.event;
 
-public class ToggleInputEvent {
-    // TODO
+import edu.wpi.first.wpilibj.SensorBase;
+
+public class ToggleInputEvent extends InputEvent {
+    protected boolean toggle;
+
+    public ToggleInputEvent(final SensorBase sensor, final boolean toggle) {
+        super(sensor);
+        this.toggle = toggle;
+    }
+
+    public final boolean getToggle() {
+        return toggle;
+    }
 }

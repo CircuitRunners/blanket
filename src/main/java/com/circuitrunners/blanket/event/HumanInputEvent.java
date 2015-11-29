@@ -17,8 +17,18 @@
     along with Blanket.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.circuitrunners.blanket.io;
+package com.circuitrunners.blanket.event;
 
-public class Input {
-    // TODO
+import edu.wpi.first.wpilibj.GenericHID;
+
+public class HumanInputEvent {
+    protected GenericHID source;
+
+    public HumanInputEvent(GenericHID source) {
+        this.source = source;
+    }
+
+    public final GenericHID getSource() {
+        return source;
+    }
 }

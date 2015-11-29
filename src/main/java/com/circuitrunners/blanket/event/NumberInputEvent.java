@@ -19,17 +19,17 @@
 
 package com.circuitrunners.blanket.event;
 
-import com.circuitrunners.blanket.io.Input;
+import edu.wpi.first.wpilibj.SensorBase;
 
-public class NumberInputEvent {
+public class NumberInputEvent extends InputEvent {
+    protected double number;
 
-    private final double rawInput;
-
-    public NumberInputEvent(final double rawInput, final Input source) {
-        this.rawInput = rawInput;
+    public NumberInputEvent(final SensorBase sensor, final double number) {
+        super(sensor);
+        this.number = number;
     }
 
-    public double getRawInput() {
-        return rawInput;
+    public final double getNumber() {
+        return number;
     }
 }
