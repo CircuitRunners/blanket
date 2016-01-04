@@ -19,17 +19,25 @@
 
 package com.circuitrunners.blanket.event;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HumanNumberInputEvent extends HumanInputEvent {
-    protected double number;
+public class EventManager {
+    private List<EventListener> listeners = new ArrayList<>();
 
-    public HumanNumberInputEvent(GenericHID source, double number) {
-        super(source);
-        this.number = number;
+    public void registerListener(EventListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
-    public final double getNumber() {
-        return number;
+    public void unregisterListener(EventListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void callEvent(Event event) {
+        for (EventListener listener : listeners) {
+            listener.onEvent(event);
+        }
     }
 }

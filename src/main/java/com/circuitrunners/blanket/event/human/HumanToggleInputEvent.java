@@ -17,19 +17,20 @@
     along with Blanket.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.circuitrunners.blanket.event;
+package com.circuitrunners.blanket.event.human;
 
-import edu.wpi.first.wpilibj.SensorBase;
+import com.circuitrunners.blanket.event.human.HumanInputEvent;
+import edu.wpi.first.wpilibj.GenericHID;
 
-public class NumberInputEvent extends InputEvent {
-    protected double number;
+public class HumanToggleInputEvent extends HumanInputEvent {
+    protected boolean toggle;
 
-    public NumberInputEvent(final SensorBase sensor, final double number) {
-        super(sensor);
-        this.number = number;
+    public HumanToggleInputEvent(GenericHID source, boolean toggle) {
+        super(source);
+        this.toggle = toggle;
     }
 
-    public final double getNumber() {
-        return number;
+    public final boolean getToggle() {
+        return toggle;
     }
 }

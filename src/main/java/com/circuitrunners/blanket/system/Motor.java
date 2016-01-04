@@ -17,18 +17,25 @@
     along with Blanket.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.circuitrunners.blanket.event;
+package com.circuitrunners.blanket.system;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class HumanInputEvent {
-    protected GenericHID source;
+public class Motor extends Subsystem {
+    public final SpeedController controller;
 
-    public HumanInputEvent(GenericHID source) {
-        this.source = source;
+    public Motor(SpeedController controller) {
+        this.controller = controller;
+        set(0);
     }
 
-    public final GenericHID getSource() {
-        return source;
+    public void set(double speed) {
+        controller.set(speed);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+        // TODO: actually init default command
     }
 }

@@ -17,25 +17,19 @@
     along with Blanket.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.circuitrunners.blanket.system;
+package com.circuitrunners.blanket.event.input;
 
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.SensorBase;
 
-public class RobotSystem extends Subsystem {
-    public final SpeedController controller;
+public class ToggleInputEvent extends InputEvent {
+    protected boolean toggle;
 
-    public RobotSystem(SpeedController controller) {
-        this.controller = controller;
-        set(0);
+    public ToggleInputEvent(final SensorBase sensor, final boolean toggle) {
+        super(sensor);
+        this.toggle = toggle;
     }
 
-    public void set(double speed) {
-        controller.set(speed);
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        // TODO: actually init default command
+    public final boolean getToggle() {
+        return toggle;
     }
 }
