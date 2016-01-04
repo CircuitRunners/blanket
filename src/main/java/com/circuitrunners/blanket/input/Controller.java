@@ -24,38 +24,39 @@ import edu.wpi.first.wpilibj.GenericHID;
 /**
  * Created by Akilan on 29.12.2015.
  */
-public class Joystick {
+public class Controller extends Input {
 
     GenericHID controller;
 
-    public Joystick(GenericHID controller) {
+    public Controller(GenericHID controller) {
         this.controller = controller;
     }
 
-    public boolean get(Button button) {
-        return button.getValue();
+    public GenericHID get() {
+        return controller;
     }
 
-    public Object get(Axis axis) {
-        return axis.getValue();
+    @Override
+    public String getId() {
+        return "Controller";
     }
 
-    public Object get(POV pov) {
-        return pov.getValue();
-    }
-
-    class Button {
+    public class Button extends Input {
         private int buttonNumber;
-        private PRESS_TYPE pressType = PRESS_TYPE.PRESS;
+        private PRESS_TYPE pressType;
         private boolean lastValue;
         private boolean value;
+
+        public Button(int buttonNumber) {
+            this(buttonNumber, PRESS_TYPE.PRESS);
+        }
 
         public Button(int buttonNumber, PRESS_TYPE pressType) {
             this.buttonNumber = buttonNumber;
             this.pressType = pressType;
         }
 
-        public boolean getValue() {
+        public Boolean get() {
             lastValue = value;
             value = controller.getRawButton(buttonNumber);
             switch (pressType) {
@@ -68,21 +69,34 @@ public class Joystick {
             }
             return value;
         }
+
+        @Override
+        public String getId() {
+            return "Button";
+        }
+
+        public PRESS_TYPE getPressType() {
+            return pressType;
+        }
     }
 
     enum PRESS_TYPE {
         PRESS, TOGGLE, RELEASE
     }
 
-    class Axis {
+    public class Axis extends Input {
         private int axisNumber;
-        private AXIS_COMPARISON_TYPE comparisonType;
-        private double comparisonValue = -2;
+        private NUMBER_COMPARISON_TYPE comparisonType;
+        private double comparisonValue;
         private double lastValue;
         private double value;
 
-        public Axis(int axisNumber, AXIS_COMPARISON_TYPE comparisonType, double comparisonValue) {
-            this(axisNumber);
+        public Axis(int axisNumber) {
+            this(axisNumber, null, 0);
+        }
+
+        public Axis(int axisNumber, NUMBER_COMPARISON_TYPE comparisonType, double comparisonValue) {
+            this.axisNumber = axisNumber;
             this.comparisonType = comparisonType;
             if (comparisonValue >= -1 && comparisonValue <= 1) {
                 this.comparisonValue = comparisonValue;
@@ -91,14 +105,10 @@ public class Joystick {
             }
         }
 
-        public Axis(int axisNumber) {
-            this.axisNumber = axisNumber;
-        }
-
-        public Object getValue() {
+        public Object get() {
             lastValue = value;
             value = controller.getRawAxis(axisNumber);
-            if (comparisonValue != -2) {
+            if (comparisonType == null) {
                 switch (comparisonType) {
                     case GREATER:
                         return value > comparisonValue;
@@ -119,13 +129,18 @@ public class Joystick {
             return value;
         }
 
+        @Override
+        public String getId() {
+            return "Axis";
+        }
+
+        public NUMBER_COMPARISON_TYPE getComparisonType() {
+            return comparisonType;
+        }
+
     }
 
-    enum AXIS_COMPARISON_TYPE {
-        GREATER, LESSER, GREATER_EQUAL, LESSER_EQUAL, EQUAL, NOT_EQUAL, CHANGE
-    }
-
-    class POV {
+    public class POV extends Input {
         private POV_OFFSET_DIRECTION offsetType;
         private int offsetValue = -1;
         private int lastValue;
@@ -143,7 +158,8 @@ public class Joystick {
 
         public POV() {}
 
-        public Object getValue() {
+        @Override
+        public Object get() {
             lastValue = value;
             value = controller.getPOV();
             if (offsetValue != -1) {
@@ -159,6 +175,11 @@ public class Joystick {
                 }
             }
             return value;
+        }
+
+        @Override
+        public String getId() {
+            return "POV";
         }
 
     }

@@ -17,11 +17,18 @@
     along with Blanket.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.circuitrunners.blanket.event;
+package com.circuitrunners.blanket.input;
 
-public abstract class Event {
+/**
+ * Created by Akilan on 30.12.2015.
+ */
+public abstract class Input {
 
-    public abstract Object getSource();
+    public abstract Object get();
 
-    public abstract Object getValue();
+    public abstract String getId();
+
+    enum NUMBER_COMPARISON_TYPE {
+        GREATER, LESSER, GREATER_EQUAL, LESSER_EQUAL, EQUAL, NOT_EQUAL, CHANGE
+    }
 }
